@@ -21,7 +21,7 @@ Este projeto foi desenvolvido como parte de um trabalho acadêmico na disciplina
   - [Liste aqui as bibliotecas Python utilizadas, como Flask, Django, etc.]
 
 - **Banco de Dados:**
-  - [Insira o nome do banco de dados aqui.]
+  - [HeidiSQL]
 
 ### Como Contribuir:
 

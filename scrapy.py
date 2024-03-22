@@ -12,7 +12,6 @@ caixa = 'caixa-economica-federal'
 
 cabecalho = {'user-agent': 'Mozilla/5.0'}
 response = requests.get(f'https://www.bancodata.com.br/relatorio/{banco}/', headers = cabecalho)
-response.raise_for_status() 
 if banco == "paypal":
   response = requests.get(f'https://www.bancodata.com.br/relatorio/{paypal}/')
 elif banco == "banco do brasil":
@@ -47,12 +46,26 @@ tabela_trimestral_io = StringIO(tabela_trimestral_str)
 df_tabela_trimestral = pd.read_html(tabela_trimestral_io)[1]
 print("\n")
 
-main_info = sopa_bonita.find_all('div', {"main-info"})
-ul = sopa_bonita.find('ul', {"statistics"})
+def extrair_infos(sopa_bonita):
+    main_info = sopa_bonita.find_all('div', {"main-info"})
+    ul = sopa_bonita.find('ul', {"statistics"})
 
-span_info = ul.find_all('span')
+    span_info = ul.find_all('span')
 
-lista_span_main_info = []
+    dados = {}
+    for span, valores in zip(span_info, main_info):
+        nome_span = span.text.strip()
+        nome_val = valores.find('strong').text.strip()
+
+        dados[nome_span] = nome_val
+
+    return dados
+
+# Para utilizar a função
+dados = extrair_infos(sopa_bonita)
+print(dados)
+
+
 
 
 
@@ -63,16 +76,7 @@ tabela_indice_str = str(tabela_indice)
 tabela_indice_io = StringIO(tabela_indice_str)
 df_tabela_indice = pd.read_html(tabela_indice_io)[0]
 
-for span, valores in zip(span_info, main_info):
-  nome_span = span.text.strip()
-  nome_val = valores.find('strong').text.strip()
 
-  lista_span_main_info.append((nome_span, nome_val))
-
-df_infos = pd.DataFrame(lista_span_main_info)
-print("Resumo do último balanço\n")
-print(df_infos)
-print("\n")
 
 tabela = sopa_bonita.find('table', {"class": "table table-bordered"})
 tabela_str = str(tabela) #Transformando a tabela inteira em uma string

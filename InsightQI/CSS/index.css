@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+:root {
+    --preto: #0E0E0E;
+    --cinza: #DCDBDB;
+    --branco: #FBFBFB;
+    --verde: #00BE18;
+    --azul: #187EDD;
+}
+
+body, html {
+    height: 100%;
+    background-color: var(--branco);
+    padding: 0;
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+header {
+    width: 100%;
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--cinza);
+}
+
+#logo_nome {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: start;
+}
+
+#logo_nome img {
+    margin-left: 1vw;
+    width: 1.4vw;
+}
+
+#logo_nome h2 {
+    margin-left: 0.5vw;
+    font-size: 2.5vh;
+    font-weight: 500;
+    color: var(--preto);
+}
+
+#link {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#link h2 {
+    font-size: 2.5vh;
+    font-weight: 500;
+    margin-left: 2vw;
+    color: var(--preto);
+}
+
+#link h2 a {
+    color: var(--preto);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#titulo {
+    width: 100%;
+    height: 20%;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#titulo h1 {
+    font-size: 9vh;
+    font-weight: 600;
+    text-align: center;
+}
+
+#titulo span {
+    color: var(--verde);
+}
+
+#centralizar {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+}
+
+#meio {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#img-home {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#img-home img {
+    width: 100%;
+}
+
+#escrita-home {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+#escrita-home h2 {
+    font-size: 3.3vh;
+    margin-left: 1.5vw;
+    font-weight: 500;
+    text-align: left;
+}
+
+#botao {
+    width: 25%;
+    height: 13%;
+    margin-left: 1.5vw;
+    border-radius: 10px;
+    background: linear-gradient(to right, var(--azul), var(--verde));
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-size: 2.3vh;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+}
+
+#botao:hover {
+    background: linear-gradient(to right, var(--verde), var(--azul));
+}
+
+#centralizar-infos {
+    width: 100%;
+    height: 23%;
+    margin-top: 8vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#infos {
+    background-color: #187EDD;
+    width: 80%;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.div-class {
+    width: 22%;
+    height: 23vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;    
+}
+
+.img-infos {
+    width: 100%;
+    height: 10%; 
+    display: flex;
+    align-items: center; 
+    justify-content: start; 
+}
+
+.img-infos img {
+    width: 10%; 
+    height: auto; 
+}
+
+.div-class h3 {
+    color: var(--branco);
+    text-align: start;
+    font-weight: 40;
+    word-break: normal;
+    font-size: 2.8vh;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+}

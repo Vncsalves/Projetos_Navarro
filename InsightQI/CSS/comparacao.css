@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+:root{
+    --preto:#0E0E0E;
+    --cinza:#DCDBDB;
+    --branco: #FBFBFB;
+    --verde:#00BE18;
+    --azul:#187EDD;
+}
+body, html {
+    height: 100%;
+    background-color: var(--branco);
+    padding: 0;
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    height: 7vh;
+}
+header img{
+    margin-left: 1vw;
+    width: 1.4vw; 
+}
+header h2{
+    margin-left: 0.5vw;
+    font-size: 2.5vh; 
+    font-weight: 500;
+    color: var(--preto);
+}
+main{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 2vh;
+}
+#banco-1{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+#banco-1 form{
+    width: 100%;
+    height: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+#banco-1 input{
+    width: 80%;
+    height: 100%;
+    background-color: #ffffff;
+    color: var(--preto);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding-left: 30px; /* Espaçamento à esquerda para o texto */
+    -webkit-box-shadow: 13px 23px 100px -34px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 13px 23px 100px -34px rgba(0, 0, 0, 1);
+    box-shadow: 13px 23px 100px -11px rgba(0, 0, 0, 1);
+}
+input:focus {
+    outline: none; /* Remove a borda de destaque quando o input está selecionado */
+}
+#botao{
+    width: 18%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+
+}
+#botao form{
+    width: 100%;
+    height: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#botao button{
+    width: 80%;
+    height: 95%;
+    margin-left: 2vh;
+    border-radius: 10px;
+    background: linear-gradient(to right, var(--azul), var(--verde));
+    border: none;
+    color: white;
+    font-size: 2vh;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+}
+#banco-2{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+#banco-2 form{
+    width: 100%;
+    height: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#banco-2 input{
+    width: 80%;
+    height: 100%;
+    background-color: #ffffff;
+    color: var(--preto);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding-left: 30px; /* Espaçamento à esquerda para o texto */
+    -webkit-box-shadow: 13px 23px 100px -34px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 13px 23px 100px -34px rgba(0, 0, 0, 1);
+    box-shadow: 13px 23px 100px -11px rgba(0, 0, 0, 1); 
+}
+input:focus {
+    outline: none; /* Remove a borda de destaque quando o input está selecionado */
+}

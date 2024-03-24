@@ -3,27 +3,27 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from io import StringIO
 
-banco = input("Informe o banco que deseja saber sobre: ")
+cabecalho = {'user-agent': 'Mozilla/5.0'}
+
+#Criando um dicionário para as urls que são diferentes dos nomes
+banco_urls = {
+    'caixa': 'https://www.bancodata.com.br/relatorio/caixa-economica-federal/',
+    'banco do brasil': 'https://www.bancodata.com.br/relatorio/bb/',
+    'paypal': 'https://www.bancodata.com.br/relatorio/10878448/'
+}
+
+banco = input("Informe o banco que deseja saber sobre: ").lower()
 print(f"Banco selecionado: \n{banco}")
 
-paypal = 10878448
-bb = 'bb'
-caixa = 'caixa-economica-federal'
+#Lógica para pesquisar se o banco informado existe dentro da lista de urls
+if banco in banco_urls:
+    url_banco = banco_urls[banco]
+else:
+    url_banco = f"https://www.bancodata.com.br/relatorio/{banco}/"
 
-cabecalho = {'user-agent': 'Mozilla/5.0'}
-response = requests.get(f'https://www.bancodata.com.br/relatorio/{banco}/', headers = cabecalho)
-if banco == "paypal":
-  response = requests.get(f'https://www.bancodata.com.br/relatorio/{paypal}/')
-elif banco == "banco do brasil":
-  response = requests.get(f'https://www.bancodata.com.br/relatorio/{bb}/')
-elif banco == "caixa":
-  response = requests.get(f"https://www.bancodata.com.br/relatorio/{caixa}/")
 
-response.text
-
-sopao_macarronico = response.text
-sopa_bonita = BeautifulSoup(sopao_macarronico, 'html.parser')
-
+response = requests.get(url_banco, headers = cabecalho)
+sopa_bonita = BeautifulSoup(response.text, 'html.parser')
 
 def extrair_infos_banco(sopa_bonita):
    tabela_banco = sopa_bonita.find('table', {"class": "table table-striped table-hover"})
@@ -64,35 +64,6 @@ def extrair_tabela_trimestral(sopa_bonita):
    tabela_trimestral_io = StringIO(tabela_trimestral_str)
    dados = pd.read_html(tabela_trimestral_io)[1]
    return dados
-
-# Utilizando as funções
-
-infos_banco = extrair_infos_banco(sopa_bonita)
-infos_ul = extrair_infos_ul(sopa_bonita)
-tabela_liquido = extrair_tabela_liquido(sopa_bonita)
-tabela_trimestral = extrair_tabela_trimestral(sopa_bonita)
-
-# Imprimindo na ordem desejada
-print("Informações do Banco:")
-print(infos_banco)
-print("\n")
-
-print("Resumo do Último Balanço:")
-print(infos_ul)
-print("\n")
-
-print("Tabela de Lucro Líquido:")
-print(tabela_liquido)
-print("\n")
-
-print("Tabela Trimestral:")
-print(tabela_trimestral)
-print("\n")
-
-
-
-
-
 
 
 #A função read_html é usada pois transformamos nossa tabela em uma unica variavel por isso é melhor utilizar ele do que o DataFrame normal...

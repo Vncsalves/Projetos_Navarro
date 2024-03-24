@@ -1,7 +1,7 @@
 import mysql.connector
 import sys
 sys.path.append('../projetos_navarro')
-import scrapy
+import scrapy_lucros
 
 # Estabeleça a conexão com o banco de dados
 conexao = mysql.connector.connect(
@@ -19,8 +19,8 @@ print("Conexão com o banco de dados estabelecida com sucesso.")
 cursor = conexao.cursor()
 
 # Importando a sopa bonita 
-from scrapy import extrair_infos_ul, sopa_bonita, extrair_infos_banco, extrair_tabela_liquido, extrair_tabela_trimestral
-from scrapy import banco
+from scrapy_lucros import extrair_infos_ul, sopa_bonita, extrair_infos_banco, extrair_tabela_liquido, extrair_tabela_trimestral
+from scrapy_lucros import banco
 
 # Pegando os dados
 dados = extrair_infos_ul(sopa_bonita)
@@ -59,6 +59,29 @@ if verificacao_banco:
         print(exibir_trimestral)
 
 else:
+    print(f"As informações do banco {nome_banco} não estão em nosso banco de dados, portanto puxaremos essa informação do site banco data e armazenaremos em nosso banco de dados!")
+    infos_banco = extrair_infos_banco(sopa_bonita)
+    infos_ul = extrair_infos_ul(sopa_bonita)
+    tabela_liquido = extrair_tabela_liquido(sopa_bonita)
+    tabela_trimestral = extrair_tabela_trimestral(sopa_bonita)
+
+    # Imprimindo na ordem desejada
+    print("Informações do Banco:")
+    print(infos_banco)
+    print("\n")
+
+    print("Resumo do Último Balanço:")
+    print(infos_ul)
+    print("\n")
+
+    print("Tabela de Lucro Líquido:")
+    print(tabela_liquido)
+    print("\n")
+
+    print("Tabela Trimestral:")
+    print(tabela_trimestral)
+    print("\n")
+
     #TABELA ULTIMO BALANÇO
     # # executa uma consulta SQL de inserção - aqui para a parte do ultimo balanço
     cursor.execute("INSERT INTO bancos_consultas (nome, data_publicacao, lucro_liquido, patrimonio_liquido, ativo_total, captacoes, carteira_credito_classificada, patrimonio_referencia_rwa, numero_agencias, numero_pontos_atendimento) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",

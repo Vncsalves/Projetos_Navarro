@@ -22,78 +22,79 @@ elif banco == "caixa":
 response.text
 
 sopao_macarronico = response.text
-sopao_macarronico
-
 sopa_bonita = BeautifulSoup(sopao_macarronico, 'html.parser')
 
-#INFORMAÇÕES DO BANCO
-tabela_banco = sopa_bonita.find('table', {"class": "table table-striped table-hover"})
-tabela_banco_str = str(tabela_banco)
-tabela_banco_io = StringIO(tabela_banco_str)
 
-df_tabela_banco = pd.read_html(tabela_banco_io)[0]
-print(df_tabela_banco)
+def extrair_infos_banco(sopa_bonita):
+   tabela_banco = sopa_bonita.find('table', {"class": "table table-striped table-hover"})
 
-tabelas_tri_liqui = sopa_bonita.find_all('table', {"class": "table table-bordered"})
+   dados = {}
+   tabela_banco_str = str(tabela_banco)
+   tabela_banco_io = StringIO(tabela_banco_str)
+   dados = pd.read_html(tabela_banco_io)[0]
+   return dados
 
-tabela_liquido_str = str(tabelas_tri_liqui)
-tabela_liquido_io = StringIO(tabela_liquido_str)
-df_tabela_liquido = pd.read_html(tabela_liquido_io)[0]
-print("\n")
-
-tabela_trimestral_str = str(tabelas_tri_liqui)
-tabela_trimestral_io = StringIO(tabela_trimestral_str)
-df_tabela_trimestral = pd.read_html(tabela_trimestral_io)[1]
-print("\n")
-
-def extrair_infos(sopa_bonita):
+def extrair_infos_ul(sopa_bonita):
     main_info = sopa_bonita.find_all('div', {"main-info"})
     ul = sopa_bonita.find('ul', {"statistics"})
-
     span_info = ul.find_all('span')
 
     dados = {}
     for span, valores in zip(span_info, main_info):
         nome_span = span.text.strip()
         nome_val = valores.find('strong').text.strip()
-
         dados[nome_span] = nome_val
-
     return dados
 
-# Para utilizar a função
-dados = extrair_infos(sopa_bonita)
-print(dados)
 
+def extrair_tabela_liquido(sopa_bonita):
+   tabelas_tri_liqui = sopa_bonita.find_all('table', {"class": "table table-bordered"})
 
+   dados = {}
+   tabela_liquido_str = str(tabelas_tri_liqui)
+   tabela_liquido_io = StringIO(tabela_liquido_str)
+   dados = pd.read_html(tabela_liquido_io)[0]
+   return dados
 
+def extrair_tabela_trimestral(sopa_bonita):
+   tabelas_tri_liqui = sopa_bonita.find_all('table', {"class": "table table-bordered"})
 
+   dados = {}
+   tabela_trimestral_str = str(tabelas_tri_liqui)
+   tabela_trimestral_io = StringIO(tabela_trimestral_str)
+   dados = pd.read_html(tabela_trimestral_io)[1]
+   return dados
 
+# Utilizando as funções
+
+infos_banco = extrair_infos_banco(sopa_bonita)
+infos_ul = extrair_infos_ul(sopa_bonita)
+tabela_liquido = extrair_tabela_liquido(sopa_bonita)
+tabela_trimestral = extrair_tabela_trimestral(sopa_bonita)
+
+# Imprimindo na ordem desejada
+print("Informações do Banco:")
+print(infos_banco)
 print("\n")
 
-tabela_indice = sopa_bonita.find('table', {"class": "table table-striped text-center"})
-tabela_indice_str = str(tabela_indice)
-tabela_indice_io = StringIO(tabela_indice_str)
-df_tabela_indice = pd.read_html(tabela_indice_io)[0]
+print("Resumo do Último Balanço:")
+print(infos_ul)
+print("\n")
+
+print("Tabela de Lucro Líquido:")
+print(tabela_liquido)
+print("\n")
+
+print("Tabela Trimestral:")
+print(tabela_trimestral)
+print("\n")
 
 
 
-tabela = sopa_bonita.find('table', {"class": "table table-bordered"})
-tabela_str = str(tabela) #Transformando a tabela inteira em uma string
-tabela_str_io = StringIO(tabela_banco_str)
 
-df_tabela = pd.read_html(tabela_str_io)[0] #Aqui é passado uma função read_html pois transformamos nossa tabela em uma unica variavel por isso é melhor utilizar ele do que o DataFrame normal...
+
+
+
+#A função read_html é usada pois transformamos nossa tabela em uma unica variavel por isso é melhor utilizar ele do que o DataFrame normal...
 #o read_html vai retornar uma lista de dataframes, por isso que sem utilizar o [0] ele vem com as chaves, pq ta acessando uma lista de dataframes, utilizando o [0] pegamos só o primeiro elemento e assim a exibição da tabela fica bonitinha
-print("Histórico do Lucro Líquido\n")
-print(df_tabela_liquido)
-print("\n")
-
-print("Índices de Basileia e Imobilização\n")
-print(df_tabela_indice)
-print("\n")
-print("Lucro Líquido Trimestral\n")
-print(df_tabela_trimestral)
-
-# Display utilizado para melhor exibição da tabela, exibe de maneira mais formatada
-
 

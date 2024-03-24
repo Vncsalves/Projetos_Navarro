@@ -15,26 +15,93 @@ conexao = mysql.connector.connect(
 # Informar quando a conexão for estabelecida
 print("Conexão com o banco de dados estabelecida com sucesso.")
 
-# Crie um objeto de cursor para executar consultas SQL
+# Criando um objeto de cursor para executar nossas consultas SQL
 cursor = conexao.cursor()
 
-# Obtenha a sopa bonita de alguma forma (por exemplo, importando o arquivo onde ela está definida)
-
-# Obtenha os dados a serem inseridos
-from scrapy import extrair_infos, sopa_bonita
+# Importando a sopa bonita 
+from scrapy import extrair_infos_ul, sopa_bonita, extrair_infos_banco, extrair_tabela_liquido, extrair_tabela_trimestral
 from scrapy import banco
 
-# Obtenha os dados a serem inseridos
-dados = extrair_infos(sopa_bonita)
+# Pegando os dados
+dados = extrair_infos_ul(sopa_bonita)
 nome_banco = banco
 
-# Execute uma consulta SQL para cada linha do DataFrame
-cursor.execute("INSERT INTO bancos_consultas (nome, data_publicacao, lucro_liquido, patrimonio_liquido, ativo_total, captacoes, carteira_credito_classificada, patrimonio_referencia_rwa, numero_agencias, numero_pontos_atendimento) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+#Verificação para ver se o banco já existe em nosso banco de dados, como todas as tabelas são relacionadas por um banco logo se em uma tabela existir
+#uma informação sobre aquele banco nas outras também vão existir
+cursor.execute("SELECT nome FROM bancos_consultas WHERE nome = %s", (nome_banco,))
+verificacao_banco = cursor.fetchone()
+
+if verificacao_banco:
+    print(f"As informações do banco {nome_banco} já foram cadastradas.\n")
+        
+    cursor.execute("SELECT * FROM info_bancos WHERE nome_banco = %s", (nome_banco,))
+    exibir_tabela_info = cursor.fetchall()
+    print("\nInformações do banco:")
+    for exibir_info in exibir_tabela_info:
+        print(exibir_info)
+        
+    cursor.execute("SELECT * FROM bancos_consultas WHERE nome = %s", (nome_banco,))
+    exibir_tabela_banco = cursor.fetchall()
+    print("\nResumo do último balanço")
+    for exibir_banco in exibir_tabela_banco:
+        print(exibir_banco)
+
+    cursor.execute("SELECT * FROM lucro_liquido_bancos WHERE nome_banco = %s", (nome_banco,))
+    exibir_tabela_lucrolqd = cursor.fetchall()
+    print("\nHistórico do Lucro Líquido:")
+    for exibir_lucrolqd in exibir_tabela_lucrolqd:
+        print(exibir_lucrolqd)
+
+    cursor.execute("SELECT * FROM lucro_liquido_trimestral_bancos WHERE nome_banco = %s", (nome_banco,))
+    exibir_tabela_trimestral = cursor.fetchall()
+    print("\nLucro Líquido Trimestral:")
+    for exibir_trimestral in exibir_tabela_trimestral:
+        print(exibir_trimestral)
+
+else:
+    #TABELA ULTIMO BALANÇO
+    # # executa uma consulta SQL de inserção - aqui para a parte do ultimo balanço
+    cursor.execute("INSERT INTO bancos_consultas (nome, data_publicacao, lucro_liquido, patrimonio_liquido, ativo_total, captacoes, carteira_credito_classificada, patrimonio_referencia_rwa, numero_agencias, numero_pontos_atendimento) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                (nome_banco, dados["Publicação"], dados["Lucro Líquido (R$)"], dados["Patrimônio Líquido (R$)"], dados["Ativo Total (R$)"], dados["Captações (R$)"], dados["Carteira de Crédito Classificada (R$)"], dados["Patrimônio de Referência RWA (R$)"], dados["Número de Agências"], dados["Número de Pontos de Atendimento"]))
+    
+    #TABELA INFORMAÇÕES DO BANCO
+    dados = extrair_infos_banco(sopa_bonita)
+    #Aqui estamos pegando só a segunda coluna da nossa tabela
+    valores_a_inserir = dados.iloc[:, 1].tolist()
+    valores_a_inserir.insert(0, nome_banco)
+    cursor.execute("INSERT INTO info_bancos (nome_banco, matriz, site_oficial, consolidacao, nome_fantasia, razao_social, cnpj, data_de_abertura, controle_acionario, tipo_da_instituicao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", valores_a_inserir)
 
-# Confirmar a inserção dos dados
-conexao.commit()
+    #TABELA DE LUCROS LIQUIDOS
+    dados = extrair_tabela_liquido(sopa_bonita)
 
-# Feche o cursor e a conexão
-cursor.close()
-conexao.close()
+    ano = dados['Ano'].tolist()
+    resultado = dados['Resultado'].tolist()
+    valor = dados['Valor (R$)'].tolist()
+
+    # Itera sobre cada linha da tabela e insere os dados no banco
+    for i in range(len(ano)):
+        cursor.execute("INSERT INTO lucro_liquido_bancos (nome_banco, ano, resultado, valor_rs) VALUES (%s, %s, %s, %s)", (nome_banco, ano[i], resultado[i], valor[i]))
+
+    #TABELA DE LUCROS LIQUIDOS TRIMESTRAIS
+    dados = extrair_tabela_trimestral(sopa_bonita)
+    trimestre = dados['Trimestre'].tolist()
+    tri1 = dados['2T2023'].tolist()
+    tri2 = dados['1T2023'].tolist()
+    tri3 = dados['4T2022'].tolist()
+    tri4 = dados['3T2022'].tolist()
+    tri5 = dados['2T2022'].tolist()
+    tri6 = dados['1T2022'].tolist()
+    tri7 = dados['4T2021'].tolist()
+    tri8 = dados['3T2021'].tolist()
+    tri9 = dados['2T2021'].tolist()
+
+    for i in range(len(trimestre)):
+        cursor.execute("INSERT INTO lucro_liquido_trimestral_bancos (nome_banco, trimestre, 2T2023, 1T2023, 4T2022, 3T2022, 2T2022, 1T2022, 4T2021, 3T2021, 2T2021) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
+                    (nome_banco, trimestre[i], tri1[i], tri2[i], tri3[i], tri4[i], tri5[i], tri6[i], tri7[i], tri8[i], tri9[i]))
+
+
+    # Confirmar a inserção dos dados
+    conexao.commit()
+
+    # Feche o cursor e a conexão
+    conexao.close()

@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+:root{
+    --preto:#0E0E0E;
+    --cinza:#DCDBDB;
+    --branco: #FBFBFB;
+    --verde:#00BE18;
+    --azul:#187EDD;
+}
+body, html {
+    height: 100%;
+    background-color: var(--branco);
+    padding: 0;
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+header {
+    width: 100%;
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--cinza);
+}
+#logo_nome {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: start;
+}
+#logo_nome img {
+    margin-left: 1vw;
+    width: 1.4vw; 
+}
+#logo_nome h2 {
+    margin-left: 0.5vw;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2.5vh; 
+    font-weight: 500;
+    color: var(--preto);
+}
+form{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 5vh;
+    margin-top: 5vh;
+}
+form .input-wrapper {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    height: 95%;
+    position: relative;
+    
+}
+form input {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    color: var(--preto);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding-left: 30px; /* Espaçamento à esquerda para o texto */
+    -webkit-box-shadow: 13px 23px 100px -34px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 13px 23px 100px -34px rgba(0, 0, 0, 1);
+    box-shadow: 13px 23px 100px -11px rgba(0, 0, 0, 1); 
+}
+input:focus {
+    outline: none; /* Remove a borda de destaque quando o input está selecionado */
+}
+form .input-wrapper span {
+    position: absolute;
+    left: 10px; /* Posição absoluta à esquerda */
+    color: var(--cinza); /* Cor do texto */
+}
+form button{
+    width: 10%;
+    height: 95%;
+    margin-left: 2vh;
+    border-radius: 10px;
+    background: linear-gradient(to right, var(--azul), var(--verde));
+    border: none;
+    color: white;
+    font-size: 2vh;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+}

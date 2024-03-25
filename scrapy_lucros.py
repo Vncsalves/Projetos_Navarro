@@ -68,4 +68,3 @@ def extrair_tabela_trimestral(sopa_bonita):
 
 #A função read_html é usada pois transformamos nossa tabela em uma unica variavel por isso é melhor utilizar ele do que o DataFrame normal...
 #o read_html vai retornar uma lista de dataframes, por isso que sem utilizar o [0] ele vem com as chaves, pq ta acessando uma lista de dataframes, utilizando o [0] pegamos só o primeiro elemento e assim a exibição da tabela fica bonitinha
-

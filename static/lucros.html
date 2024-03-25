@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/Logo.svg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/lucros.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@100..700&display=swap" rel="stylesheet">
+    <title>Lucros</title>
+</head>
+<body>
+    <header>
+        <div id="logo_nome">
+            <a href="{{ url_for('homepage') }}"><img src="{{ url_for('static', filename='img/Logo.svg') }}" alt=""></a>
+            <h2>InsightQI</h2>
+        </div>
+    </header>
+    <main>
+        <form action="/buscar_lucros" method="post">
+            <div class="input-wrapper">
+                <input type="text" name="banco" placeholder="Nome do banco">
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/Logo.svg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/comparacao.css')}} ">
+    <title>Comparação</title>
+</head>
+<body>
+  <header>
+    <a href="{{ url_for('homepage') }}"><img src="{{ url_for('static', filename='img/Logo.svg') }}" alt=""></a>
+    <h2>InsightQI</h2>
+  </header>
+  <main>
+    <div id="banco-1">
+        <form id="form-banco-1">
+            <input id="input-banco-1" type="text" placeholder="Informe o primeiro banco">
+        </form>
+    </div>
+    <div id="botao">
+        <button onclick="buscarDados()">Buscar</button>
+    </div>
+    <div id="banco-2">
+        <form id="form-banco-2">
+            <input id="input-banco-2" type="text" placeholder="Informe o segundo banco">
+        </form>
+    </div>
+  </main>
+</body>
+</html>

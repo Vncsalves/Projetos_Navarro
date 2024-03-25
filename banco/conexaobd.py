@@ -3,7 +3,8 @@ import sys
 sys.path.append('../projetos_navarro')
 import scrapy_lucros
 
-# Estabeleça a conexão com o banco de dados
+
+#Estabelecendo a conexão com o banco de dados
 conexao = mysql.connector.connect(
     host="localhost",  # Endereço do servidor de banco de dados
     user="root",  # Nome de usuário do banco de dados
@@ -12,17 +13,17 @@ conexao = mysql.connector.connect(
     charset='utf8'
 )
 
-# Informar quando a conexão for estabelecida
+#Caso a conexão tenha sido estabelecida vai aparecer a mensagem abaixo
 print("Conexão com o banco de dados estabelecida com sucesso.")
 
-# Criando um objeto de cursor para executar nossas consultas SQL
+#Criando um objeto de cursor para executar nossas consultas SQL
 cursor = conexao.cursor()
 
-# Importando a sopa bonita 
+#Importando as funções de extração de html do nosso outro arquivo
 from scrapy_lucros import extrair_infos_ul, sopa_bonita, extrair_infos_banco, extrair_tabela_liquido, extrair_tabela_trimestral
 from scrapy_lucros import banco
 
-# Pegando os dados
+#Pegando os dados
 dados = extrair_infos_ul(sopa_bonita)
 nome_banco = banco
 

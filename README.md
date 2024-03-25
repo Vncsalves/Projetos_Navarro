@@ -13,15 +13,15 @@ Este projeto foi desenvolvido como parte de um trabalho acadêmico na disciplina
 ### Tecnologias Utilizadas:
 
 - **Frontend:**
-  - HTML, CSS, JavaScript para a construção da interface do usuário.
+  - HTML, CSS, para a construção da interface do usuário.
   - Figma para o design e prototipagem da interface.
 
 - **Backend:**
   - Python para o desenvolvimento da lógica do servidor.
-  - [Liste aqui as bibliotecas Python utilizadas, como Flask, Django, etc.]
+  - resquets,beautifullsoup4,pandas,lxml,Mysql.connector, flaks como bibliotecas 
 
 - **Banco de Dados:**
-  - [HeidiSQL]
+  - xampp
 
 ### Como Contribuir:
 
